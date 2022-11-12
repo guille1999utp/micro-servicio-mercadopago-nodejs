@@ -36,4 +36,9 @@ app.post("/mercadopago", async (req, res)=>{
 
 })
 
+app.post("/ipn", async (req, res)=>{
+   console.log(req)
+   res.status(200).send("OK");
+})
+
 app.listen(5000,()=>{console.log("server started on port 5000")}) 
