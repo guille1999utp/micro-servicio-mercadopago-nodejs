@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require("axios");
 const app = express();
 const cors = require("cors");
 const { mercadopago } = require("./mercadopago/index")
@@ -38,7 +39,20 @@ app.post("/mercadopago", async (req, res)=>{
 
 app.post("/ipn", async (req, res)=>{
    console.log(req)
-   res.status(200).send("OK");
+   const { id,topic } = req.query;
+   if(id !== 123456){
+      const { data } = await axios.post(`https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=${id}`,{
+         headers: {
+           'Authorization': 'Bearer ' + process.env.ACCESS_TOKEN
+         }
+       })
+       console.log(data)
+   }
+      
+      return  res.status(200).send("OK");
+
+
+
 })
 
 app.listen(5000,()=>{console.log("server started on port 5000")}) 
