@@ -24,7 +24,6 @@ app.post("/mercadopago", async (req, res)=>{
       
       
    }
-   console.log(preference)
 
    try {
       const mercadoResponse = await mercadopago.preferences.create(preference);
@@ -38,16 +37,21 @@ app.post("/mercadopago", async (req, res)=>{
 })
 
 app.post("/ipn", async (req, res)=>{
-   console.log(req)
+   console.log(req.query)
    const { id,topic } = req.query;
-   if(id !== 123456){
-      const { data } = await axios.post(`https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=${id}`,{
-         headers: {
-           'Authorization': 'Bearer ' + process.env.ACCESS_TOKEN
-         }
-       })
-       console.log(data)
+   try {
+      if(id !== "123456"){
+         const { data } = await axios.post(`https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=${id}`,{
+            headers: {
+              'Authorization': 'Bearer ' + process.env.ACCESS_TOKEN
+            }
+          })
+          console.log(data)
+      }
+   } catch (error) {
+    console.log(error)  
    }
+  
       
       return  res.status(200).send("OK");
 
