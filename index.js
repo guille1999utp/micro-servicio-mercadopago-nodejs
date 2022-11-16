@@ -40,7 +40,7 @@ app.post("/webhooks", async (req, res)=>{
    const { data: { id },type } = req.body;
    try {
       if(id !== "123456789" && type === "payment"){
-         const { data } = await axios.post(`https://api.mercadopago.com/v1/payments/${id}`,{
+         const { data } = await axios.get(`https://api.mercadopago.com/v1/payments/${id}`,{
             headers: {
               'Authorization': 'Bearer ' + process.env.ACCESS_TOKEN
             }
