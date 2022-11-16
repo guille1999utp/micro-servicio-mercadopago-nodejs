@@ -36,10 +36,10 @@ app.post("/mercadopago", async (req, res)=>{
 })
 
 app.post("/webhooks", async (req, res)=>{
-   console.log(req.query)
-   const { id,topic } = req.query;
+   console.log(req.body)
+   const { data: { id },type } = req.body;
    try {
-      if(id !== "123456" && topic == "payment"){
+      if(id !== "123456789" && type === "payment"){
          const { data } = await axios.post(`https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=${id}`,{
             headers: {
               'Authorization': 'Bearer ' + process.env.ACCESS_TOKEN
