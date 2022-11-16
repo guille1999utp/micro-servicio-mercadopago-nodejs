@@ -10,7 +10,6 @@ app.post("/mercadopago", async (req, res)=>{
    const {order:{items,infoShipping,buyer}} = req.body;
    const preference = {
       items: items.map((item)=>{
-         console.log(item)
          return {
             title: item.ref,
             description: item.brand,
@@ -36,7 +35,7 @@ app.post("/mercadopago", async (req, res)=>{
 
 })
 
-app.post("/ipn", async (req, res)=>{
+app.post("/webhooks", async (req, res)=>{
    console.log(req.query)
    const { id,topic } = req.query;
    try {
