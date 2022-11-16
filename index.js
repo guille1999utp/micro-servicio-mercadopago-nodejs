@@ -40,7 +40,7 @@ app.post("/ipn", async (req, res)=>{
    console.log(req.query)
    const { id,topic } = req.query;
    try {
-      if(id !== "123456"){
+      if(id !== "123456" && topic == "payment"){
          const { data } = await axios.post(`https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=${id}`,{
             headers: {
               'Authorization': 'Bearer ' + process.env.ACCESS_TOKEN
