@@ -2,7 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const app = express();
 const {database} = require("./utils/firebase");
-const { collection, addDoc } = require("firebase/firestore");
+const { collection, addDoc,updateDoc,doc } = require("firebase/firestore");
 const cors = require("cors");
 const { mercadopago } = require("./mercadopago/index");
 app.use(cors());
@@ -66,8 +66,16 @@ app.post("/webhooks", async (req, res) => {
         }
       );
       console.log(data);
+      const {metadata:{id_shop}} = data;
 
       if (data.status === "approved" && data.status_detail === "accredited") {
+        const docRef = doc(db, "ordenes de compra", id_shop);
+        updateDoc(docRef, {ispaid:"approved"}).then(docRef => {
+            console.log("A New Document Field has been added to an existing document");
+        })
+        .catch(error => {
+            console.log(error);
+        })
       }
     }
   } catch (error) {
