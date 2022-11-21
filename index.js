@@ -19,6 +19,7 @@ app.post("/mercadopago", async (req, res) => {
     const queryRef = collection(database, "ordenes de compra");
     //agregamos el documento y obtenemos el id de ref de la orden
     addDoc(queryRef, order).then(async(respuesta) => {
+      console.log(items)
       const preference = {
          metadata: {
             idShop:respuesta.id,
