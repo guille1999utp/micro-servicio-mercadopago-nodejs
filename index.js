@@ -69,7 +69,7 @@ app.post("/webhooks", async (req, res) => {
       const {metadata:{id_shop}} = data;
       console.log(id_shop);
       if (data.status === "approved" && data.status_detail === "accredited") {
-        const docRef = doc(db, "ordenes de compra", id_shop);
+        const docRef = doc(database, "ordenes de compra", id_shop);
         updateDoc(docRef, {ispaid:"approved"}).then(docRef => {
             console.log("A New Document Field has been added to an existing document");
         })
