@@ -67,7 +67,7 @@ app.post("/webhooks", async (req, res) => {
       );
       console.log(data);
       const {metadata:{id_shop}} = data;
-
+      console.log(id_shop);
       if (data.status === "approved" && data.status_detail === "accredited") {
         const docRef = doc(db, "ordenes de compra", id_shop);
         updateDoc(docRef, {ispaid:"approved"}).then(docRef => {
